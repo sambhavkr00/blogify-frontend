@@ -1,0 +1,111 @@
+<div class="container my-4">
+  <div class="card shadow-lg mx-auto" style="max-width: 800px">
+    <!-- Enhanced Title Section -->
+    <div class="custom-header">
+      <h4 class="fs-3 fw-bold">
+        <i class="bi bi-plus-circle-dotted"></i> Add New Blog
+      </h4>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="blogForm" (ngSubmit)="onSubmit()">
+        <!-- Blog Title -->
+        <div class="mb-3">
+          <label class="form-label">Blog Title</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="title"
+            placeholder="Enter blog title"
+          />
+          <small
+            class="text-danger"
+            *ngIf="
+              blogForm.get('title')?.invalid && blogForm.get('title')?.touched
+            "
+          >
+            Blog title is required.
+          </small>
+        </div>
+
+        <!-- Blog Content -->
+        <div class="mb-3">
+          <label class="form-label">Content</label>
+          <textarea
+            class="form-control"
+            rows="5"
+            formControlName="content"
+            placeholder="Write your content here..."
+          ></textarea>
+          <small
+            class="text-danger"
+            *ngIf="
+              blogForm.get('content')?.invalid &&
+              blogForm.get('content')?.touched
+            "
+          >
+            Content is required.
+          </small>
+        </div>
+
+        <!-- Category Selection -->
+        <div class="mb-3">
+          <label class="form-label">Category</label>
+          <select class="form-select" formControlName="category">
+            <option value="" selected disabled>Select a category</option>
+            <option value="tech">Technology</option>
+            <option value="lifestyle">Lifestyle</option>
+            <option value="education">Education</option>
+            <option value="health">Health</option>
+          </select>
+          <small
+            class="text-danger"
+            *ngIf="
+              blogForm.get('category')?.invalid &&
+              blogForm.get('category')?.touched
+            "
+          >
+            Please select a category.
+          </small>
+        </div>
+
+        <!-- Tags Input -->
+        <div class="mb-3">
+          <label class="form-label">Tags (comma separated)</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="tags"
+            placeholder="e.g., Web Development, Angular, Bootstrap"
+          />
+        </div>
+
+        <!-- Upload Photo -->
+        <div class="mb-3">
+          <label class="form-label">Upload Cover Photo</label>
+          <input type="file" class="form-control" />
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="d-flex justify-content-between">
+          <button
+            [routerLink]="['/mydrafts']"
+            type="button"
+            class="btn btn-warning mx-2"
+          >
+            <i class="bi bi-file-earmark-text"></i> Save as Draft
+          </button>
+          <div>
+            <button type="reset" class="btn btn-danger mx-2">Cancel</button>
+            <button
+              type="submit"
+              class="btn btn-success mx-2"
+              [disabled]="blogForm.invalid"
+            >
+              Done
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

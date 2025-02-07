@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-signup',
@@ -9,29 +10,58 @@ import { DataService } from 'src/app/services/data.service';
   styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent {
+  signupForm: FormGroup;
+  isSubmitting: boolean = false; // Prevent multiple submissions
+
   constructor(
+    private fb: FormBuilder,
     private _authService: AuthService,
     private _dataService: DataService,
     private _router: Router
-  ) {}
+  ) {
+    this.signupForm = this.fb.group(
+      {
+        name: ['', [Validators.required, Validators.minLength(3)]],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        repeatpassword: ['', Validators.required],
+      },
+      { validator: this.passwordMatchValidator }
+    );
+  }
+
+  // Custom validator to check if passwords match
+  passwordMatchValidator(form: FormGroup) {
+    return form.get('password')?.value === form.get('repeatpassword')?.value
+      ? null
+      : { mismatch: true };
+  }
+
   signup() {
-    let name = 'Sambhav';
-    let email = 'kumarsambhav00@gmail.com';
-    let password = '123456789';
+    if (this.signupForm.invalid) {
+      alert('Please fill all fields correctly.');
+      return;
+    }
+
+    this.isSubmitting = true; // Disable button to prevent multiple requests
+
+    const { name, email, password } = this.signupForm.value;
 
     this._authService.signup(name, email, password).subscribe({
       next: (res: any) => {
-        console.log(res);
-        // res will contain token and user
-        // save these to local storage
-        // update user subject in userservice
         let { token, user } = res;
         localStorage.setItem('token', token);
         this._dataService.updateUser(user);
-        // navigate to home page
+        alert('Signup Successful!');
         this._router.navigate(['/']);
       },
-      error: (err) => console.log(err),
+      error: (err) => {
+        console.log(err);
+        alert('Signup failed. Please try again.');
+      },
+      complete: () => {
+        this.isSubmitting = false;
+      },
     });
   }
 }

@@ -1,7 +1,6 @@
 * {
   box-sizing: border-box;
   margin: 0;
-  padding: 0;
 }
 
 .hero-section {
@@ -32,14 +31,15 @@ img {
 }
 
 .card {
-  width: 300px;
+  width: 400px;
   height: 480px;
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
   overflow: hidden;
 }
 
 .card-header {
-  min-height: 200px;
+  height: 170px;
+  padding: 0;
 }
 
 .card-header img {
@@ -49,26 +49,33 @@ img {
 }
 
 .card-body {
-  min-height: 100px;
+  max-height: 245px;
   padding: 20px;
   overflow: hidden;
+}
+
+.truncate-multiline {
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  line-clamp: 7;
+  -webkit-box-orient: vertical;
 }
 
 .card-footer {
   background-color: rgb(224, 224, 224);
-  max-height: 70px;
-  padding: 20px;
+  max-height: 80px;
+  padding: 10px;
   overflow: hidden;
 }
 
-.tag {
+.category {
   background: teal;
   border-radius: 50px;
+  font-size: 10px;
   margin: 0;
   color: #fff;
   padding: 2px 8px;
   text-transform: uppercase;
-  cursor: pointer;
 }
 
 .card-body p {

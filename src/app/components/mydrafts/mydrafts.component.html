@@ -1,0 +1,92 @@
+<div class="container my-4">
+  <div class="text-center">
+    <h2 class="fw-bold text-primary">
+      <i class="bi bi-file-earmark-text"></i> My Drafts
+    </h2>
+    <p class="text-muted">All your saved blog drafts are listed here.</p>
+  </div>
+
+  <div class="row mt-4">
+    <!-- Dummy Draft 1 -->
+    <div class="col-md-6 mb-4">
+      <div class="card shadow">
+        <div class="card-body">
+          <h5 class="card-title">Exploring AI in 2025</h5>
+          <p class="card-text text-muted">Category: Technology</p>
+          <p class="small text-truncate">
+            Artificial Intelligence is evolving rapidly, with new breakthroughs
+            happening every day...
+          </p>
+          <div class="d-flex justify-content-between">
+            <button class="btn btn-danger btn-sm">
+              <i class="bi bi-trash"></i> Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dummy Draft 2 -->
+    <div class="col-md-6 mb-4">
+      <div class="card shadow">
+        <div class="card-body">
+          <h5 class="card-title">Top 5 Bootstrap Tips</h5>
+          <p class="card-text text-muted">Category: Web Development</p>
+          <p class="small text-truncate">
+            Bootstrap makes front-end development easier. Here are the top 5
+            tips to improve your design...
+          </p>
+          <div class="d-flex justify-content-between">
+            <button class="btn btn-danger btn-sm">
+              <i class="bi bi-trash"></i> Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dummy Draft 3 -->
+    <div class="col-md-6 mb-4">
+      <div class="card shadow">
+        <div class="card-body">
+          <h5 class="card-title">How to Stay Productive</h5>
+          <p class="card-text text-muted">Category: Lifestyle</p>
+          <p class="small text-truncate">
+            Maintaining productivity can be challenging. Here are a few
+            strategies to keep you on track...
+          </p>
+          <div class="d-flex justify-content-between">
+            <button class="btn btn-danger btn-sm">
+              <i class="bi bi-trash"></i> Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dummy Draft 4 -->
+    <div class="col-md-6 mb-4">
+      <div class="card shadow">
+        <div class="card-body">
+          <h5 class="card-title">The Future of Web3</h5>
+          <p class="card-text text-muted">Category: Blockchain</p>
+          <p class="small text-truncate">
+            Web3 is revolutionizing the internet, focusing on decentralization
+            and blockchain technology...
+          </p>
+          <div class="d-flex justify-content-between">
+            <button class="btn btn-danger btn-sm">
+              <i class="bi bi-trash"></i> Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center mt-4">
+    <a [routerLink]="['/createpost']" class="btn btn-info">
+      <i class="bi bi-pencil-square"></i> Add New Blog
+    </a>
+  </div>
+</div>

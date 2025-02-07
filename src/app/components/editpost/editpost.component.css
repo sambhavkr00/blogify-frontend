@@ -1,0 +1,10 @@
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+.custom-header {
+  background: linear-gradient(90deg, #ff008c, #f21050); /* Gradient Effect */
+  color: white; /* White Text */
+  text-align: center;
+  padding: 15px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
