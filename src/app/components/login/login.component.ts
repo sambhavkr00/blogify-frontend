@@ -26,7 +26,10 @@ export class LoginComponent {
   }
 
   login() {
-    if (this.loginForm.invalid) return;
+    if (this.loginForm.invalid) {
+      alert('Please fill all fields correctly.');
+      return;
+    }
 
     const { email, password } = this.loginForm.value;
 
@@ -42,9 +45,18 @@ export class LoginComponent {
         this._dataService.updateUser(user);
 
         // Navigate to home page
-        this._router.navigate(['/mydrafts']);
+        this._router.navigate(['/']);
       },
-      error: (err) => console.log('Login Error:', err),
+      error: (err) => {
+        if (err.status == 404) {
+          alert('User not found. Please Signup first.');
+          this._router.navigate(['/']);
+        }
+
+        if (err.status == 401) {
+          alert('Invalid credentials. Please try again.');
+        }
+      },
     });
   }
 }

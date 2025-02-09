@@ -28,4 +28,17 @@ export class AuthService {
     localStorage.removeItem('token');
     this._dataService.updateUser(null);
   }
+
+  authenticate(): void {
+    const user = localStorage.getItem('user');
+
+    if (user) {
+      this._dataService.updateUser(JSON.parse(user));
+    }
+  }
+
+  getUserName(): string {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user).name : 'User';
+  }
 }

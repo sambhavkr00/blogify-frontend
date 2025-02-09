@@ -1,227 +1,39 @@
 <div class="hero-section d-flex flex-column justify-content-center">
   <div>
-    <h1>Hi There,</h1>
+    <h1>Hi {{ isLoggedIn ? firstName : "There" }},</h1>
     <p>Connect to people through your blogs...</p>
-    <a [routerLink]="['signup']" class="btn p-2">Signup</a>
+    <a *ngIf="!isLoggedIn" [routerLink]="['/signup']" class="btn p-2">Signup</a>
+    <a *ngIf="isLoggedIn" [routerLink]="['/createpost']" class="btn p-2"
+      >Add Blog</a
+    >
   </div>
 </div>
+
 <div class="container-fluid d-flex justify-content-around flex-wrap mt-5">
-  <div class="card mb-5">
-    <div class="card-header">
-      <img src="../../../assets/post1.jpg" alt="post1" />
+  <div
+    *ngFor="let post of blogPosts"
+    class="card mb-5"
+    (click)="navigateToPost(post)"
+  >
+    <div class="card-header" *ngFor="let media of post.media">
+      <img [src]="'../../../assets/' + media" [alt]="post.title" />
     </div>
     <div
       class="card-body d-flex flex-column justify-content-start align-items-start"
     >
-      <span class="category">Technology</span>
-      <h5 class="my-2">Why is the Tesla Cybertruck designed the way it is?</h5>
-      <p class="truncate-multiline">
-        An exploration into the truck's polarising design An exploration into
-        the truck's polarising designAn exploration into the truck's polarising
-        designAn exploration into the truck's polarising designAn exploration
-        into the truck's polarising designAn exploration into the truck's
-        polarising designAn exploration into the truck's polarising designAn
-        exploration into the truck's polarising designAn exploration into the
-        truck's polarising design
-      </p>
+      <span class="category" *ngFor="let category of post.categories">{{
+        category.name
+      }}</span>
+      <h5 class="my-2">{{ post.title }}</h5>
+      <p class="truncate-multiline">{{ post.content }}</p>
     </div>
     <div class="card-footer author d-flex flex-column justify-content-start">
       <div class="author-info">
-        <h6>Sambhav</h6>
-        <small>13 Jan 2025</small>&nbsp;|
-        <small class="text-muted">2h ago</small>
-      </div>
-    </div>
-  </div>
-  <div class="card mb-5">
-    <div class="card-header">
-      <img src="../../../assets/post2.jpg" alt="post1" />
-    </div>
-    <div
-      class="card-body d-flex flex-column justify-content-start align-items-start"
-    >
-      <span class="category">Technology</span>
-      <h5 class="my-2">Why is the Tesla Cybertruck designed the way it is?</h5>
-      <p class="truncate-multiline">
-        An exploration into the truck's polarising design An exploration into
-        the truck's polarising designAn exploration into the truck's polarising
-        designAn exploration into the truck's polarising designAn exploration
-        into the truck's polarising designAn exploration into the truck's
-        polarising designAn exploration into the truck's polarising designAn
-        exploration into the truck's polarising designAn exploration into the
-        truck's polarising design
-      </p>
-    </div>
-    <div class="card-footer author d-flex flex-column justify-content-start">
-      <div class="author-info">
-        <h6>Sambhav</h6>
-        <small>13 Jan 2025</small>&nbsp;|
-        <small class="text-muted">2h ago</small>
-      </div>
-    </div>
-  </div>
-  <div class="card mb-5">
-    <div class="card-header">
-      <img src="../../../assets/post3.jpg" alt="post1" />
-    </div>
-    <div
-      class="card-body d-flex flex-column justify-content-start align-items-start"
-    >
-      <span class="category">Technology</span>
-      <h5 class="my-2">Why is the Tesla Cybertruck designed the way it is?</h5>
-      <p class="truncate-multiline">
-        An exploration into the truck's polarising design An exploration into
-        the truck's polarising designAn exploration into the truck's polarising
-        designAn exploration into the truck's polarising designAn exploration
-        into the truck's polarising designAn exploration into the truck's
-        polarising designAn exploration into the truck's polarising designAn
-        exploration into the truck's polarising designAn exploration into the
-        truck's polarising design
-      </p>
-    </div>
-    <div class="card-footer author d-flex flex-column justify-content-start">
-      <div class="author-info">
-        <h6>Sambhav</h6>
-        <small>13 Jan 2025</small>&nbsp;|
-        <small class="text-muted">2h ago</small>
-      </div>
-    </div>
-  </div>
-  <div class="card mb-5">
-    <div class="card-header">
-      <img src="../../../assets/post4.jpeg" alt="post1" />
-    </div>
-    <div
-      class="card-body d-flex flex-column justify-content-start align-items-start"
-    >
-      <span class="category">Technology</span>
-      <h5 class="my-2">Why is the Tesla Cybertruck designed the way it is?</h5>
-      <p class="truncate-multiline">
-        An exploration into the truck's polarising design An exploration into
-        the truck's polarising designAn exploration into the truck's polarising
-        designAn exploration into the truck's polarising designAn exploration
-        into the truck's polarising designAn exploration into the truck's
-        polarising designAn exploration into the truck's polarising designAn
-        exploration into the truck's polarising designAn exploration into the
-        truck's polarising design
-      </p>
-    </div>
-    <div class="card-footer author d-flex flex-column justify-content-start">
-      <div class="author-info">
-        <h6>Sambhav</h6>
-        <small>13 Jan 2025</small>&nbsp;|
-        <small class="text-muted">2h ago</small>
-      </div>
-    </div>
-  </div>
-  <div class="card mb-5">
-    <div class="card-header">
-      <img src="../../../assets/post5.jpg" alt="post1" />
-    </div>
-    <div
-      class="card-body d-flex flex-column justify-content-start align-items-start"
-    >
-      <span class="category">Technology</span>
-      <h5 class="my-2">Why is the Tesla Cybertruck designed the way it is?</h5>
-      <p class="truncate-multiline">
-        An exploration into the truck's polarising design An exploration into
-        the truck's polarising designAn exploration into the truck's polarising
-        designAn exploration into the truck's polarising designAn exploration
-        into the truck's polarising designAn exploration into the truck's
-        polarising designAn exploration into the truck's polarising designAn
-        exploration into the truck's polarising designAn exploration into the
-        truck's polarising design
-      </p>
-    </div>
-    <div class="card-footer author d-flex flex-column justify-content-start">
-      <div class="author-info">
-        <h6>Sambhav</h6>
-        <small>13 Jan 2025</small>&nbsp;|
-        <small class="text-muted">2h ago</small>
-      </div>
-    </div>
-  </div>
-  <div class="card mb-5">
-    <div class="card-header">
-      <img src="../../../assets/post6.jpg" alt="post1" />
-    </div>
-    <div
-      class="card-body d-flex flex-column justify-content-start align-items-start"
-    >
-      <span class="category">Technology</span>
-      <h5 class="my-2">Why is the Tesla Cybertruck designed the way it is?</h5>
-      <p class="truncate-multiline">
-        An exploration into the truck's polarising design An exploration into
-        the truck's polarising designAn exploration into the truck's polarising
-        designAn exploration into the truck's polarising designAn exploration
-        into the truck's polarising designAn exploration into the truck's
-        polarising designAn exploration into the truck's polarising designAn
-        exploration into the truck's polarising designAn exploration into the
-        truck's polarising design
-      </p>
-    </div>
-    <div class="card-footer author d-flex flex-column justify-content-start">
-      <div class="author-info">
-        <h6>Sambhav</h6>
-        <small>13 Jan 2025</small>&nbsp;|
-        <small class="text-muted">2h ago</small>
-      </div>
-    </div>
-  </div>
-  <div class="card mb-5">
-    <div class="card-header">
-      <img src="../../../assets/post7.jpg" alt="post1" />
-    </div>
-    <div
-      class="card-body d-flex flex-column justify-content-start align-items-start"
-    >
-      <span class="category">Technology</span>
-      <h5 class="my-2">Why is the Tesla Cybertruck designed the way it is?</h5>
-      <p class="truncate-multiline">
-        An exploration into the truck's polarising design An exploration into
-        the truck's polarising designAn exploration into the truck's polarising
-        designAn exploration into the truck's polarising designAn exploration
-        into the truck's polarising designAn exploration into the truck's
-        polarising designAn exploration into the truck's polarising designAn
-        exploration into the truck's polarising designAn exploration into the
-        truck's polarising design
-      </p>
-    </div>
-    <div class="card-footer author d-flex flex-column justify-content-start">
-      <div class="author-info">
-        <h6>Sambhav</h6>
-        <small>13 Jan 2025</small>&nbsp;|
-        <small class="text-muted">2h ago</small>
-      </div>
-    </div>
-  </div>
-  <div class="card mb-5">
-    <div class="card-header">
-      <img src="../../../assets/post8.jpg" alt="post1" />
-    </div>
-    <div
-      class="card-body d-flex flex-column justify-content-start align-items-start"
-    >
-      <span class="category">Technology</span>
-      <h5 class="my-2">Why is the Tesla Cybertruck designed the way it is?</h5>
-      <p class="truncate-multiline">
-        An exploration into the truck's polarising design An exploration into
-        the truck's polarising designAn exploration into the truck's polarising
-        designAn exploration into the truck's polarising designAn exploration
-        into the truck's polarising designAn exploration into the truck's
-        polarising designAn exploration into the truck's polarising designAn
-        exploration into the truck's polarising designAn exploration into the
-        truck's polarising design
-      </p>
-    </div>
-    <div class="card-footer author d-flex flex-column justify-content-start">
-      <div class="author-info">
-        <h6>Sambhav</h6>
-        <small>13 Jan 2025</small>&nbsp;|
-        <small class="text-muted">2h ago</small>
+        <h6>{{ post.author.name }}</h6>
+        <small class="text-muted">{{
+          post.publishedDate | date : "longDate"
+        }}</small>
       </div>
     </div>
   </div>
 </div>
-<!-- <app-editpost /> -->
-<!-- <app-login></app-login> -->

@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
-  private _userDataSource = new Subject<any>();
+  private _userDataSource = new BehaviorSubject<any>(null);
   user$ = this._userDataSource.asObservable();
 
   constructor() {}
 
   updateUser(user: any) {
     this._userDataSource.next(user);
+
     if (user) {
       localStorage.setItem('user', JSON.stringify(user));
     } else {

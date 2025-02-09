@@ -49,14 +49,19 @@ export class SignupComponent {
 
     this._authService.signup(name, email, password).subscribe({
       next: (res: any) => {
-        let { token, user } = res;
-        localStorage.setItem('token', token);
-        this._dataService.updateUser(user);
-        alert('Signup Successful!');
-        this._router.navigate(['/']);
+        if (res.message === 'User already exists') {
+          this.isSubmitting = false;
+          alert('User already exists. Please login.');
+          this._router.navigate(['/']);
+        } else {
+          let { token, user } = res;
+          localStorage.setItem('token', token);
+          this._dataService.updateUser(user);
+          alert('Signup Successful!');
+          this._router.navigate(['/']);
+        }
       },
       error: (err) => {
-        console.log(err);
         alert('Signup failed. Please try again.');
       },
       complete: () => {
