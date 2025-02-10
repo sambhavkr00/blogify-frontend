@@ -36,9 +36,4 @@ export class AuthService {
       this._dataService.updateUser(JSON.parse(user));
     }
   }
-
-  getUserName(): string {
-    const user = localStorage.getItem('user');
-    return user ? JSON.parse(user).name : 'User';
-  }
 }
