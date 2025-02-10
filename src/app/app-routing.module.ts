@@ -7,13 +7,15 @@ import { MydraftsComponent } from './components/mydrafts/mydrafts.component';
 import { AnalyticsComponent } from './components/analytics/analytics.component';
 import { CreatepostComponent } from './components/createpost/createpost.component';
 import { ViewPostComponent } from './components/viewpost/viewpost.component';
+import { EditpostComponent } from './components/editpost/editpost.component';
 
 const routes: Routes = [
   { path: '', component: HomepageComponent, pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'createpost', component: CreatepostComponent },
-  { path: 'viewpost/:postid', component: ViewPostComponent },
+  { path: 'viewpost/:postId', component: ViewPostComponent },
+  { path: 'editpost/:postId', component: EditpostComponent },
   { path: 'mydrafts', component: MydraftsComponent },
   { path: 'analytics', component: AnalyticsComponent },
   { path: '**', redirectTo: '' },

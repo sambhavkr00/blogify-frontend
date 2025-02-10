@@ -19,4 +19,19 @@ export class DataService {
       localStorage.removeItem('user');
     }
   }
+
+  getUserName(): string {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user).name : 'User';
+  }
+
+  getUserId() {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    return user._id;
+  }
+
+  getUser() {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    return user;
+  }
 }

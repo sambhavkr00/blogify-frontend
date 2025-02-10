@@ -13,7 +13,7 @@ import { EditpostComponent } from './components/editpost/editpost.component';
 import { CreatepostComponent } from './components/createpost/createpost.component';
 import { MydraftsComponent } from './components/mydrafts/mydrafts.component';
 import { AnalyticsComponent } from './components/analytics/analytics.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -33,6 +33,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

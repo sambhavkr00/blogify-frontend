@@ -11,6 +11,7 @@ import { DataService } from 'src/app/services/data.service';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  alert = '';
 
   constructor(
     private fb: FormBuilder,
@@ -27,7 +28,7 @@ export class LoginComponent {
 
   login() {
     if (this.loginForm.invalid) {
-      alert('Please fill all fields correctly.');
+      this.alert = 'Please fill all fields correctly.';
       return;
     }
 
@@ -35,7 +36,6 @@ export class LoginComponent {
 
     this._authService.login(email, password).subscribe({
       next: (res: any) => {
-        console.log('Login Successful:', res);
         const { token, user } = res;
 
         // Save token to localStorage
@@ -49,12 +49,12 @@ export class LoginComponent {
       },
       error: (err) => {
         if (err.status == 404) {
-          alert('User not found. Please Signup first.');
-          this._router.navigate(['/']);
+          this.alert = 'User not found. Please Signup first.';
+          // this._router.navigate(['/']);
         }
 
         if (err.status == 401) {
-          alert('Invalid credentials. Please try again.');
+          this.alert = 'Invalid credentials. Please try again.';
         }
       },
     });

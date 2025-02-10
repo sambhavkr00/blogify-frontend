@@ -1,20 +1,25 @@
 <div class="hero-section d-flex flex-column justify-content-center">
   <div>
     <h1>Hi {{ isLoggedIn ? firstName : "There" }},</h1>
-    <p>Connect to people through your blogs...</p>
-    <a *ngIf="!isLoggedIn" [routerLink]="['/signup']" class="btn p-2">Signup</a>
-    <a *ngIf="isLoggedIn" [routerLink]="['/createpost']" class="btn p-2"
+    <p class="mb-4">Connect to people through your blogs...</p>
+    <a
+      *ngIf="!isLoggedIn"
+      [routerLink]="['/signup']"
+      class="btn text-white p-2"
+      style="background-color: rgb(196, 121, 10)"
+      >Signup</a
+    >
+    <a
+      *ngIf="isLoggedIn"
+      [routerLink]="['/createpost']"
+      class="btn btn-secondary text-white p-2"
       >Add Blog</a
     >
   </div>
 </div>
 
 <div class="container-fluid d-flex justify-content-around flex-wrap mt-5">
-  <div
-    *ngFor="let post of blogPosts"
-    class="card mb-5"
-    (click)="navigateToPost(post)"
-  >
+  <div *ngFor="let post of blogPosts" class="card mb-5">
     <div class="card-header" *ngFor="let media of post.media">
       <img [src]="'../../../assets/' + media" [alt]="post.title" />
     </div>
@@ -26,6 +31,11 @@
       }}</span>
       <h5 class="my-2">{{ post.title }}</h5>
       <p class="truncate-multiline">{{ post.content }}</p>
+      <a
+        [routerLink]="['/viewpost', post._id]"
+        class="btn btn-link text-primary p-0"
+        >Read More</a
+      >
     </div>
     <div class="card-footer author d-flex flex-column justify-content-start">
       <div class="author-info">

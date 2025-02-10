@@ -4,44 +4,58 @@
       <article>
         <header class="mb-4">
           <h1 class="fw-bolder mb-1">
-            Why is the Tesla Cybertruck designed the way it is?
+            {{ blogPost.title }}
           </h1>
 
           <div class="d-flex justify-content-between align-items-center mb-1">
             <div class="text-muted fst-italic">
-              <span>Posted on January 7, 2025 by Sambhav Kumar | 2h ago</span>
+              <span
+                >Posted on {{ blogPost.publishedDate | date : "longDate" }} by
+                {{ blogPost.author.name }}</span
+              >
             </div>
             <div class="d-flex gap-2">
-              <button class="btn btn-sm btn-outline-danger fw-bold rounded-5">
+              <button
+                class="btn btn-sm btn-outline-danger fw-bold rounded-5"
+                [disabled]="!isLoggedIn"
+              >
                 Delete
               </button>
-              <button class="btn btn-sm btn-outline-success fw-bold rounded-5">
+              <button
+                [routerLink]="['/editpost', blogPost._id]"
+                class="btn btn-sm btn-outline-success fw-bold rounded-5"
+                [disabled]="!isLoggedIn"
+              >
                 Edit
               </button>
             </div>
           </div>
 
           <div class="text-muted fst-italic">
-            <span class="ms-2">Views: 10k</span>
+            <span>Views: {{ blogPost.viewCount }}</span>
           </div>
 
           <div class="d-flex flex-wrap align-items-center mt-2 gap-2">
             <span class="fw-bold">Category:</span>
-            <span class="badge bg-primary text-uppercase">Technology</span>
-            <span class="badge bg-primary text-uppercase">Innovation</span>
+            <span
+              *ngFor="let category of blogPost.categories"
+              class="badge bg-primary text-uppercase"
+              >{{ category.name }}</span
+            >
           </div>
 
           <div class="d-flex flex-wrap align-items-center gap-2 mt-2">
             <span class="fw-bold">Tags:</span>
-            <span class="badge bg-success">Technology</span>
-            <span class="badge bg-success">AI</span>
+            <span *ngFor="let tag of blogPost.tags" class="badge bg-success">{{
+              tag.name
+            }}</span>
           </div>
         </header>
 
-        <figure class="mb-4">
+        <figure *ngFor="let photo of blogPost.media" class="mb-4">
           <img
-            src="../../../assets/post1.jpg"
-            alt="postImage"
+            [src]="'../../../assets/' + photo"
+            [alt]="photo"
             class="img-fluid rounded"
             width="800px"
           />
@@ -49,65 +63,60 @@
 
         <section class="mb-4">
           <p class="text-justify">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga, ab
-            commodi consectetur iste perspiciatis veritatis rem dignissimos
-            dolore tempore. Est veniam corrupti officia qui delectus pariatur
-            alias aliquam saepe mollitia? Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Fuga, ab commodi consectetur iste perspiciatis
-            veritatis rem dignissimos dolore tempore. Est veniam corrupti
-            officia qui delectus pariatur alias aliquam saepe mollitia? Lorem
-            ipsum dolor sit amet consectetur adipisicing elit. Fuga, ab commodi
-            consectetur iste perspiciatis veritatis rem dignissimos dolore
-            tempore. Est veniam corrupti officia qui delectus pariatur alias
-            aliquam saepe mollitia? Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Fuga, ab commodi consectetur iste perspiciatis
-            veritatis rem dignissimos dolore tempore. Est veniam corrupti
-            officia qui delectus pariatur alias aliquam saepe mollitia? Lorem
-            ipsum dolor sit amet consectetur adipisicing elit. Fuga, ab commodi
-            consectetur iste perspiciatis veritatis rem dignissimos dolore
-            tempore. Est veniam corrupti officia qui delectus pariatur alias
-            aliquam saepe mollitia? Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Fuga, ab commodi consectetur iste perspiciatis
-            veritatis rem dignissimos dolore tempore. Est veniam corrupti
-            officia qui delectus pariatur alias aliquam saepe mollitia? Lorem
-            ipsum dolor sit amet consectetur adipisicing elit. Fuga, ab commodi
-            consectetur iste perspiciatis veritatis rem dignissimos dolore
-            tempore. Est veniam corrupti officia qui delectus pariatur alias
-            aliquam saepe mollitia? Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Fuga, ab commodi consectetur iste perspiciatis
-            veritatis rem dignissimos dolore tempore. Est veniam corrupti
-            officia qui delectus pariatur alias aliquam saepe mollitia?
+            {{ blogPost.content }}
           </p>
         </section>
 
         <div class="text-end">
-          <span class="text-muted">Last modified: 2h ago</span>
+          <span class="text-muted"
+            >Last modified: {{ blogPost.modifiedAt | date : "fullDate" }}</span
+          >
         </div>
       </article>
 
+      <!-- Comment Section -->
       <section class="my-4">
         <div class="card bg-light">
-          <div class="card-body">
-            <form class="mb-4">
+          <div class="card-header" *ngIf="isLoggedIn">
+            <form class="mb-1">
               <textarea
-                class="form-control"
+                class="form-control mb-3"
                 rows="3"
-                placeholder="Leave a comment to join the discussion"
+                placeholder="Leave a comment..."
+                [(ngModel)]="newCommentContent"
+                name="comment"
               ></textarea>
+              <div class="d-flex justify-content-end gap-3">
+                <small class="text-danger me-1">{{ alert }}</small>
+                <button (click)="addComment()" class="btn btn-sm btn-info">
+                  Comment
+                </button>
+              </div>
             </form>
           </div>
 
-          <div class="d-flex align-items-center mb-3">
-            <i class="bi bi-person-circle fs-2 p-3"></i>
-            <div>
-              <div class="fw-bold">Name</div>
-              <p class="mb-0">Lorem ipsum, dolor sit amet consectetur.</p>
+          <div class="card-body">
+            <div *ngIf="comments.length === 0" class="text-center text-muted">
+              No comments yet.
             </div>
-          </div>
-
-          <div class="d-flex justify-content-end gap-3 m-3">
-            <button class="btn btn-sm btn-danger">Reject</button>
-            <button class="btn btn-sm btn-success">Approve</button>
+            <div *ngFor="let comment of comments" class="mb-2">
+              <div class="d-flex align-items-center">
+                <i class="bi bi-person-circle fs-2 p-3"></i>
+                <div>
+                  <div class="fw-bold">
+                    {{ comment.user?.name || "Anonymous" }}
+                  </div>
+                  <p>{{ comment.content }}</p>
+                  <small class="text-muted">{{
+                    comment.createdAt | date : "short"
+                  }}</small>
+                </div>
+              </div>
+              <div class="d-flex justify-content-end">
+                <button class="btn btn-sm btn-danger me-3">Reject</button>
+                <button class="btn btn-sm btn-success">Approve</button>
+              </div>
+            </div>
           </div>
         </div>
       </section>

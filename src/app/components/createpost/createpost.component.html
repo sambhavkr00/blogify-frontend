@@ -7,7 +7,7 @@
       </h4>
     </div>
     <div class="card-body">
-      <form [formGroup]="blogForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="blogForm">
         <!-- Blog Title -->
         <div class="mb-3">
           <label class="form-label">Blog Title</label>
@@ -49,19 +49,34 @@
 
         <!-- Category Selection -->
         <div class="mb-3">
-          <label class="form-label">Category</label>
-          <select class="form-select" formControlName="category">
-            <option value="" selected disabled>Select a category</option>
-            <option value="tech">Technology</option>
-            <option value="lifestyle">Lifestyle</option>
-            <option value="education">Education</option>
-            <option value="health">Health</option>
-          </select>
+          <div class="form-group">
+            <label>Select Categories:</label>
+
+            <!-- Bootstrap Grid for Multi-Column Layout -->
+            <div class="row">
+              <div
+                *ngFor="let item of categories; let i = index"
+                class="col-md-4 col-sm-6 col-12"
+              >
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="category{{ i }}"
+                    (change)="onCheckboxChange($event, item)"
+                  />
+                  <label class="form-check-label" for="category{{ i }}">
+                    {{ item.name }}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
           <small
             class="text-danger"
             *ngIf="
-              blogForm.get('category')?.invalid &&
-              blogForm.get('category')?.touched
+              blogForm.get('categories')?.invalid &&
+              blogForm.get('categories')?.touched
             "
           >
             Please select a category.
@@ -82,30 +97,31 @@
         <!-- Upload Photo -->
         <div class="mb-3">
           <label class="form-label">Upload Cover Photo</label>
-          <input type="file" class="form-control" />
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="d-flex justify-content-between">
-          <button
-            [routerLink]="['/mydrafts']"
-            type="button"
-            class="btn btn-warning mx-2"
-          >
-            <i class="bi bi-file-earmark-text"></i> Save as Draft
-          </button>
-          <div>
-            <button type="reset" class="btn btn-danger mx-2">Cancel</button>
-            <button
-              type="submit"
-              class="btn btn-success mx-2"
-              [disabled]="blogForm.invalid"
-            >
-              Done
-            </button>
-          </div>
+          <input type="file" class="form-control" formControlName="media" />
         </div>
       </form>
+      <!-- Action Buttons -->
+      <div class="d-flex justify-content-between">
+        <button
+          [routerLink]="['/mydrafts']"
+          type="button"
+          class="btn btn-warning mx-2"
+          (click)="publish(false)"
+        >
+          <i class="bi bi-file-earmark-text"></i> Save as Draft
+        </button>
+        <div>
+          <button type="reset" class="btn btn-danger mx-2">Cancel</button>
+          <button
+            type="submit"
+            class="btn btn-success mx-2"
+            [disabled]="blogForm.invalid"
+            (click)="publish(true)"
+          >
+            Publish
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

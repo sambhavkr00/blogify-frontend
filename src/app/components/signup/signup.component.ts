@@ -11,7 +11,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class SignupComponent {
   signupForm: FormGroup;
-  isSubmitting: boolean = false; // Prevent multiple submissions
+  alert = '';
 
   constructor(
     private fb: FormBuilder,
@@ -39,33 +39,25 @@ export class SignupComponent {
 
   signup() {
     if (this.signupForm.invalid) {
-      alert('Please fill all fields correctly.');
+      this.alert = 'Please fill all fields correctly.';
       return;
     }
-
-    this.isSubmitting = true; // Disable button to prevent multiple requests
 
     const { name, email, password } = this.signupForm.value;
 
     this._authService.signup(name, email, password).subscribe({
       next: (res: any) => {
-        if (res.message === 'User already exists') {
-          this.isSubmitting = false;
-          alert('User already exists. Please login.');
-          this._router.navigate(['/']);
-        } else {
-          let { token, user } = res;
-          localStorage.setItem('token', token);
-          this._dataService.updateUser(user);
-          alert('Signup Successful!');
-          this._router.navigate(['/']);
-        }
+        let { token, user } = res;
+        localStorage.setItem('token', token);
+        this._dataService.updateUser(user);
+        this._router.navigate(['/']);
       },
       error: (err) => {
-        alert('Signup failed. Please try again.');
-      },
-      complete: () => {
-        this.isSubmitting = false;
+        if (err.status == 409) {
+          this.alert = 'User already exists. Please login.';
+          return;
+        }
+        this.alert = 'Signup failed. Please try again.';
       },
     });
   }

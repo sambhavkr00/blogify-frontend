@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { BlogPost } from 'src/app/models/blogpost.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { BlogService } from 'src/app/services/blogpost.service';
@@ -17,7 +19,6 @@ export class HomepageComponent {
 
   constructor(
     private _blogService: BlogService,
-    private _authService: AuthService,
     private _dataService: DataService
   ) {}
 
@@ -31,16 +32,12 @@ export class HomepageComponent {
         this.isLoggedIn = !!user;
 
         if (user) {
-          this.userName = this._authService.getUserName().trim();
+          this.userName = this._dataService.getUserName().trim();
           this.firstName = this.userName.split(' ')[0];
         } else {
           this.firstName = 'There';
         }
       },
     });
-  }
-  navigateToPost(post: BlogPost) {
-    console.log('Navigating to:', post.title);
-    // Here you can use Angular Router to navigate to the post details page
   }
 }
