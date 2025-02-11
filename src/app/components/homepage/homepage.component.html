@@ -23,12 +23,17 @@
     <div class="card-header" *ngFor="let media of post.media">
       <img [src]="'../../../assets/' + media" [alt]="post.title" />
     </div>
+    <div *ngIf="post.media == null" class="card-header">
+      <img src="../../../assets/no_image.jpg" alt="no_image" />
+    </div>
     <div
       class="card-body d-flex flex-column justify-content-start align-items-start"
     >
-      <span class="category" *ngFor="let category of post.categories">{{
-        category.name
-      }}</span>
+      <div class="d-flex flex-wrap">
+        <span class="category" *ngFor="let category of post.categories">
+          {{ category.name }}
+        </span>
+      </div>
       <h5 class="my-2">{{ post.title }}</h5>
       <p class="truncate-multiline">{{ post.content }}</p>
       <a

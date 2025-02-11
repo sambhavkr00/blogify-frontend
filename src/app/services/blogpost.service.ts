@@ -39,26 +39,75 @@ export class BlogService {
     });
   }
 
-  //   // Update a blog post
-  //   updateBlog(id: string, blog: BlogPost): Observable<BlogPost> {
-  //     return this.http.put<BlogPost>(`${this.apiUrl}/${id}`, blog);
-  //   }
+  // Update a blog post
+  updateBlog(postId: string, blog: BlogPost): Observable<BlogPost> {
+    const headers = this.getAuthHeader();
+    return this.http.put<BlogPost>(
+      `${environment.apiUrl}posts/${postId}`,
+      blog,
+      { headers }
+    );
+  }
 
-  //   // Delete a blog post
-  //   deleteBlog(id: string): Observable<any> {
-  //     return this.http.delete(`${this.apiUrl}/${id}`);
-  //   }
+  // Delete a blog post
+  deleteBlog(postId: string): Observable<any> {
+    const headers = this.getAuthHeader();
+    return this.http.delete(`${environment.apiUrl}posts/${postId}`, {
+      headers,
+    });
+  }
 
   // Get all Comments
   addCommentOnPost(postId: string, comments: Comment): Observable<Comment> {
+    const headers = this.getAuthHeader();
     return this.http.post<Comment>(
       `${environment.apiUrl}posts/${postId}/addcomment`,
-      comments
+      comments,
+      { headers }
     );
   }
 
   // Get all Caterogies
   getAllCategories(): Observable<string[]> {
     return this.http.get<string[]>(environment.apiUrl + 'categories');
+  }
+
+  getAllDrafts(userId: string): Observable<BlogPost[]> {
+    const headers = this.getAuthHeader();
+
+    return this.http.get<BlogPost[]>(
+      `${environment.apiUrl}drafts/${userId}/mydrafts`,
+      {
+        headers,
+      }
+    );
+  }
+
+  deleteDraft(draftId: string): Observable<any> {
+    const headers = this.getAuthHeader();
+    return this.http.delete<any>(
+      `${environment.apiUrl}drafts/${draftId}/deletedraft`,
+      { headers }
+    );
+  }
+
+  approveComment(commentId: string): Observable<any> {
+    const headers = this.getAuthHeader();
+
+    return this.http.post<any>(
+      `${environment.apiUrl}posts/${commentId}/approvecomment`,
+      {},
+      { headers }
+    );
+  }
+
+  rejectComment(commentId: string, postId: string): Observable<any> {
+    const headers = this.getAuthHeader();
+
+    return this.http.post<any>(
+      `${environment.apiUrl}posts/${postId}/${commentId}/rejectcomment`,
+      {},
+      { headers }
+    );
   }
 }

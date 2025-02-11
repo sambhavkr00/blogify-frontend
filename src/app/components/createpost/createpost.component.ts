@@ -56,6 +56,11 @@ export class CreatepostComponent implements OnInit {
       return;
     }
 
+    if (this.blogForm.value.media) {
+      let image = this.blogForm.value.media.split('C:\\fakepath\\')[1];
+      this.blogForm.value.media = [`${image}`];
+    }
+
     const blogData: BlogPost = {
       author: this.user!,
       title: this.blogForm.value.title,
@@ -70,7 +75,6 @@ export class CreatepostComponent implements OnInit {
 
     this._blogService.createBlog(blogData).subscribe({
       next: (res) => {
-        console.log(res);
         this.blogForm.reset();
         this._router.navigate(['/']);
       },

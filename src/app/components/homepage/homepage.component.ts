@@ -1,8 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { BlogPost } from 'src/app/models/blogpost.model';
-import { AuthService } from 'src/app/services/auth.service';
 import { BlogService } from 'src/app/services/blogpost.service';
 import { DataService } from 'src/app/services/data.service';
 
@@ -19,7 +17,8 @@ export class HomepageComponent {
 
   constructor(
     private _blogService: BlogService,
-    private _dataService: DataService
+    private _dataService: DataService,
+    private _router: Router
   ) {}
 
   ngOnInit(): void {
