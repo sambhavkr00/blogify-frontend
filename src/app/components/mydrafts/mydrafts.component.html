@@ -16,13 +16,29 @@
       <div class="card shadow">
         <div class="card-body">
           <h5 class="card-title">Title: {{ draft.title }}</h5>
-          <span *ngFor="let category of draft.categories" class="card-text"
-            >Categories: {{ category.name }}</span
-          >
-          <p class="small text-truncate">Content: {{ draft.content }}</p>
-          <p class="small text-truncate">Tags: {{ draft.content }}</p>
-          <div class="d-flex justify-content-between">
-            <button class="btn btn-danger btn-sm" (click)="deleteDraft()">
+          <div>
+            <span class="fw-bold me-1">Categories:</span>
+            <span
+              *ngFor="let category of draft.categories"
+              class="small card-text me-1 text-truncate"
+              >{{ category.name }}
+            </span>
+          </div>
+          <div>
+            <span class="fw-bold me-1 text-truncate">Content:</span>
+            <span class="small card-text me-1">{{ draft.content }} </span>
+          </div>
+          <div>
+            <span class="fw-bold me-1 text-truncate">Tags:</span>
+            <span *ngFor="let tag of draft.tags" class="small card-text me-1"
+              >{{ tag.name }}
+            </span>
+          </div>
+          <!-- <span class="fw-bold me-1">Content:</span>
+          <p class="small text-truncate">{{ draft.content }}</p>
+          <p class="small text-truncate">Tags: {{ draft.content }}</p> -->
+          <div class="d-flex justify-content-between mt-2">
+            <button class="btn btn-danger btn-sm" (click)="deleteDraft(draft)">
               <i class="bi bi-trash"></i> Delete
             </button>
             <button

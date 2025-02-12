@@ -61,14 +61,19 @@ export class CreatepostComponent implements OnInit {
       this.blogForm.value.media = [`${image}`];
     }
 
+    const tags =
+      typeof this.blogForm.value.tags === 'string'
+        ? this.blogForm.value.tags.split(',').map((tag: string) => tag.trim())
+        : Array.isArray(this.blogForm.value.tags)
+        ? this.blogForm.value.tags
+        : [];
+
     const blogData: BlogPost = {
       author: this.user!,
       title: this.blogForm.value.title,
       content: this.blogForm.value.content,
       categories: this.blogForm.value.categories,
-      tags: this.blogForm.value.tags
-        .split(',')
-        .map((tag: string) => tag.trim()),
+      tags: tags,
       media: this.blogForm.value.media,
       isPublished: isPublished,
     };

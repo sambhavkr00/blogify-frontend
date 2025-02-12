@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BlogPost } from 'src/app/models/blogpost.model';
 import { BlogService } from 'src/app/services/blogpost.service';
 import { DataService } from 'src/app/services/data.service';
@@ -17,6 +17,7 @@ export class MydraftsComponent implements OnInit {
   constructor(
     private _dataService: DataService,
     private _blogservice: BlogService,
+    private _router: Router,
     private _activatedRoute: ActivatedRoute
   ) {}
 
@@ -43,14 +44,20 @@ export class MydraftsComponent implements OnInit {
     });
   }
 
-  deleteDraft() {
-    this._blogservice.deleteDraft(this.draftId).subscribe({
+  deleteDraft(draft: BlogPost) {
+    this._blogservice.deleteDraft(draft._id!).subscribe({
       next: (data) => {
         console.log('Draft deleted', data);
+        this.drafts = this.drafts.filter((post) => post._id !== draft._id);
       },
       error: (err) => {
         console.log('Drafts not found');
       },
     });
+  }
+
+  publish(postId: string, blogForm: BlogPost) {
+    this._blogservice.updateBlog(postId, blogForm);
+    this._router.navigate(['/']);
   }
 }
